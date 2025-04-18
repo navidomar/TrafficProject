@@ -1,9 +1,9 @@
 public class ArrivalProcess {
-    private RandomDistribution arrivalDisribution;
+    private RandomDistribution arrivalDistribution;
     private double nextArrivalTime;
     public ArrivalProcess(double lambda) {
-        this.arrivalDisribution = new ExponentialDistribution(lambda);
-        this.nextArrivalTime = arrivalDisribution.run();
+        this.arrivalDistribution = new ExponentialDistribution(lambda);
+        this.nextArrivalTime = arrivalDistribution.run();
     }
 
     public double getNextArrivalTime() {
@@ -11,7 +11,7 @@ public class ArrivalProcess {
     }
 
     public void generateNextArrival() {
-        nextArrivalTime += arrivalDisribution.run();
+        nextArrivalTime += arrivalDistribution.run();
     }
 }
 
