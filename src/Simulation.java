@@ -1,14 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-/*
-Specifications:
--Simulate the expected time experience for a person going through bus stop and train station
--Account for the
-
-*/
-
-
 public class Simulation {
     private double currentTime;
     private Queue<Job> trainStationQueue;
