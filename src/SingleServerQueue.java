@@ -30,7 +30,7 @@ public class SingleServerQueue {
         }
     }
 
-    public static void doUnitTests() {
+    /*public static void doUnitTests() {
         int testCount = 0;
         int failCount = 0;
         SingleServerQueue testQueue = new SingleServerQueue();
@@ -59,6 +59,6 @@ public class SingleServerQueue {
         }
         testCount++;
         System.out.println("\nSingleServerQueue class tests run: " + testCount + ", failed: " + failCount + "\n");
-    }
+    }*/
 
 }

@@ -19,7 +19,7 @@ public class Simulation {
 
     }
 
-    public void run(double sim_time) {
+    /*public void run(double sim_time) {
         while (currentTime < sim_time) {
             double nextArrival = arrivalProcess.getNextArrivalTime();
             if (nextArrival <= currentTime) {
@@ -37,7 +37,7 @@ public class Simulation {
             }
             currentTime = nextArrival;
         }
-    }
+    }*/
 
     public Queue<Job> getCompletedJobs() {
         return completedJobs;
