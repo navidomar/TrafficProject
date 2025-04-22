@@ -69,7 +69,6 @@ public class Simulation {
                     busStopInterval += 300.0;
                     busPassCount = 0;
                 }
-                }
             }
 
 

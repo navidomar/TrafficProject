@@ -4,6 +4,8 @@ public class SingleServerQueue {
     private double nextEndServiceTime = Double.MAX_VALUE;
     private double lambda = 1;
     private RandomDistribution serviceTimeDistribution = new ExponentialDistribution(lambda);
+    private RandomDistribution busRideDistribution = new NormalDistribution(12.0, 7.0);
+    private RandomDistribution trainRideDistribution = new NormalDistribution(15.0,3.0);
 
     public void add(Job job, Double currentTime) {
         if (jobInService == null) {
