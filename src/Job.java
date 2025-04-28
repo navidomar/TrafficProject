@@ -1,51 +1,29 @@
 public class Job {
-    private double startTime;
-    private double arrivalTime;
-    Stop currentStop;
-    Stop destination;
-    double distanceFromStop;
-    boolean usesEBike;
-    double readyAtStopTime;
-    String[] journeyStages;
-    int stageIndex;
+    private double startTime;  //Job start time
+    private double eBikeRideTime;  //E-bike travel time to bus stop
+    private double busRideTime;   //Bus ride time to train station
+    private double trainRideTime; //Train ride time to D.C.
 
-    public Job(double startTime, Stop origin, Stop destination) {
+    private double busStopWaitTime = 0.0;
+    private double trainStationWaitTime = 0.0;
 
+    public Job(double arrivalTime, double eBikeRideTime, double busRideTime, double trainRideTime) {
         this.startTime = startTime;
-        this.currentStop = origin;
-        this.destination = destination;
-        this.journeyStages = new String[10];
-        this.stageIndex = 0;
-
-        //Some basic test values for now will change later
-        this.distanceFromStop = Math.random() * 5;
-        this.usesEBike = distanceFromStop > 1.5;
-        double travelTime = usesEBike ? (distanceFromStop / 40.0) * 60.0 : 0;
-        this.readyAtStopTime = startTime + travelTime;
-
-        if (usesEBike) {
-            addStage("Used E-bike for " + String.format("%2f", distanceFromStop)
-                    + " miles. Reached bus stop at " + String.format("%2f", readyAtStopTime));
-        } else {
-            addStage("Walked to bus stop. Arrived immediately at " + startTime);
-        }
-    }
-    public void addStage(String description) {
-        if(stageIndex < journeyStages.length) {
-            journeyStages[stageIndex++] = description;
-        }
-    }
-    public boolean isReady(double currentTime) {
-        return currentTime >= readyAtStopTime;
+        this.eBikeRideTime = eBikeRideTime;
+        this.busRideTime = busRideTime;
+        this.trainRideTime = trainRideTime;
     }
 
-    public void printJourney() {
-        for(int i = 0; i < stageIndex; i++) {
-            System.out.println(journeyStages[i]);
-        }
+    public void setBusStopWaitTime(double currentSimTime) {
+        busStopWaitTime = currentSimTime - startTime;
     }
 
-    public void setTime(double time1) {
-        startTime = time1;
+    public void setTrainStationWaitTime(double currentSimTime) {
+        trainStationWaitTime = currentSimTime - (busStopWaitTime + startTime);
     }
+
+    public String TotalTravelTime() {
+        return eBikeRideTime + ", " + busRideTime + ", " + trainRideTime + ", " + busStopWaitTime + ", " + trainStationWaitTime + ", " + (eBikeRideTime + busRideTime + trainRideTime + busStopWaitTime + trainStationWaitTime);
+    }
+
 }

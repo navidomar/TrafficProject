@@ -1,3 +1,5 @@
+import java.util.Random;
+
 abstract class RandomDistribution {
     abstract double run();
 
@@ -61,6 +63,32 @@ class NormalDistribution extends RandomDistribution {
         }
         double z = (sumOfRandom-(n/2))/(Math.sqrt(n/12));   // z is an approximation of the normal distribution formula
         return mu + sigma * z;
+    }
+}
+
+class TriangularDistribution extends RandomDistribution {
+    private Random rand;
+    private double min;
+    private double mode;
+    private double max;
+
+    public TriangularDistribution(Random rand, double min, double mode, double max) {
+        this.rand = rand;
+        this.min = min;
+        this.mode = mode;
+        this.max = max;
+    }
+
+    @Override
+    double run() {
+        double u = rand.nextDouble();
+        double c = (mode - min) / (max - min);
+
+        if (u < c) {
+            return min + Math.sqrt(u * (max - min) * (mode - min));
+        } else {
+            return max - Math.sqrt((1 - u) * (max - min) * (max - mode));
+        }
     }
 }
 
