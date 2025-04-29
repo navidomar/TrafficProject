@@ -7,11 +7,15 @@ public class Job {
     private double busStopWaitTime = 0.0;
     private double trainStationWaitTime = 0.0;
 
-    public Job(double arrivalTime, double eBikeRideTime, double busRideTime, double trainRideTime) {
+    public Job(double startTime, double eBikeRideTime, double busRideTime, double trainRideTime) {
         this.startTime = startTime;
         this.eBikeRideTime = eBikeRideTime;
         this.busRideTime = busRideTime;
         this.trainRideTime = trainRideTime;
+    }
+
+    public double getBusRideTime() {
+        return busRideTime;
     }
 
     public void setBusStopWaitTime(double currentSimTime) {
