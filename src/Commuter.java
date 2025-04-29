@@ -1,5 +1,5 @@
-public class Job {
-    private double startTime;  //Job start time
+public class Commuter {
+    private double startTime;  //Commuter start time
     private double eBikeRideTime;  //E-bike travel time to bus stop
     private double busRideTime;   //Bus ride time to train station
     private double trainRideTime; //Train ride time to D.C.
@@ -9,7 +9,7 @@ public class Job {
     private double trainStationWaitTime = 0.0;
     private double metroWaitTime = 0.0;
 
-    public Job(double startTime, double eBikeRideTime, double busRideTime, double trainRideTime, double metroRideTime) {
+    public Commuter(double startTime, double eBikeRideTime, double busRideTime, double trainRideTime, double metroRideTime) {
         this.startTime = startTime;
         this.eBikeRideTime = eBikeRideTime;
         this.busRideTime = busRideTime;

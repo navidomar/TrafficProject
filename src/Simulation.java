@@ -3,11 +3,11 @@ import java.util.List;
 
 public class Simulation {
     private double currentTime;
-    private Queue<Job> trainStationQueue;
-    private Queue<Job> busStopQueue;
-    private Queue<Job> metroQueue;
+    private Queue<Commuter> trainStationQueue;
+    private Queue<Commuter> busStopQueue;
+    private Queue<Commuter> metroQueue;
     private ArrivalProcess arrivalProcess;
-    private List<Job> reachedDestination;
+    private List<Commuter> reachedDestination;
 
     public Simulation() {
         this.currentTime = 0;
@@ -18,7 +18,7 @@ public class Simulation {
         this.reachedDestination = new ArrayList<>();
     }
 
-    public List<Job> run(double sim_time) {
+    public List<Commuter> run(double sim_time) {
         double busStopInterval = 300.0/46.0;  //36 buses per stop, Average of 5 minutes across 46 stops
         double trainStationInterval = 2700.0/7.0; //4 trains per station, average of 45 minutes across 7 stations
         double metroInterval = 300.0; //5 minutes
@@ -26,19 +26,19 @@ public class Simulation {
         int trainPassCount = 0; //1300 max
         int metroPassCount = 0; //2400 max
         int startTimesTracker = 0;
-        ArrayList<Double> jobStartTimes = arrivalProcess.generateStartTimes();
-        Double nextStart = jobStartTimes.get(startTimesTracker);
+        ArrayList<Double> commuteStartTimes = arrivalProcess.generateStartTimes();
+        Double nextStart = commuteStartTimes.get(startTimesTracker);
 
         while (currentTime < sim_time) {
-            if (startTimesTracker < jobStartTimes.size()) {
+            if (startTimesTracker < commuteStartTimes.size()) {
                 if (nextStart <= currentTime) {
                     startTimesTracker++;
                     double eBikeRideTime = arrivalProcess.generateEbikeRideTime();
                     double busRideTime = arrivalProcess.generateBusRideTime();
                     double trainRideTime = arrivalProcess.generateTrainRideTime();
                     double metroRideTime = arrivalProcess.generateMetroRideTime();
-                    Job job = new Job(nextStart, eBikeRideTime, busRideTime, trainRideTime, metroRideTime);
-                    busStopQueue.enqueue(job);
+                    Commuter commuter = new Commuter(nextStart, eBikeRideTime, busRideTime, trainRideTime, metroRideTime);
+                    busStopQueue.enqueue(commuter);
                     busPassCount++;
                 }
             }
@@ -47,18 +47,18 @@ public class Simulation {
             if (busStopInterval <= currentTime) {
                 if (busPassCount <= 25) {
                     for (int i = 0; i < busPassCount; i++) {
-                        Job job = busStopQueue.dequeue();
-                        job.setBusStopWaitTime(currentTime);
-                        trainStationQueue.enqueue(job);
+                        Commuter commuter = busStopQueue.dequeue();
+                        commuter.setBusStopWaitTime(currentTime);
+                        trainStationQueue.enqueue(commuter);
                         trainPassCount++;
                     }
                     busStopInterval += 300.0/46.0;
                     busPassCount = 0;
                 } else {
                     for (int i = 0; i < 25; i++) {
-                        Job job = busStopQueue.dequeue();
-                        job.setBusStopWaitTime(currentTime);
-                        trainStationQueue.enqueue(job);
+                        Commuter commuter = busStopQueue.dequeue();
+                        commuter.setBusStopWaitTime(currentTime);
+                        trainStationQueue.enqueue(commuter);
                         trainPassCount++;
                     }
                     busStopInterval += 300.0/46.0;
@@ -70,18 +70,18 @@ public class Simulation {
             if (trainStationInterval <= currentTime) {
                 if (trainPassCount <= 1300) {
                     for (int i = 0; i < trainPassCount; i++) {
-                        Job job = trainStationQueue.dequeue();
-                        job.setTrainStationWaitTime(currentTime);
-                        metroQueue.enqueue(job);
+                        Commuter commuter = trainStationQueue.dequeue();
+                        commuter.setTrainStationWaitTime(currentTime);
+                        metroQueue.enqueue(commuter);
                         metroPassCount++;
                     }
                     trainStationInterval += 2700.0/7.0;
                     trainPassCount = 0;
                 } else {
                     for (int i = 0; i < 1300; i++) {
-                        Job job = trainStationQueue.dequeue();
-                        job.setTrainStationWaitTime(currentTime);
-                        metroQueue.enqueue(job);
+                        Commuter commuter = trainStationQueue.dequeue();
+                        commuter.setTrainStationWaitTime(currentTime);
+                        metroQueue.enqueue(commuter);
                         metroPassCount++;
                     }
                     trainStationInterval += 2700.0/7.0;
@@ -92,17 +92,17 @@ public class Simulation {
             if (metroInterval <= currentTime) {
                 if (metroPassCount <= 2400) {
                     for (int i = 0; i < metroPassCount; i++) {
-                        Job job = metroQueue.dequeue();
-                        job.setMetroWaitTime(currentTime);
-                        reachedDestination.add(job);
+                        Commuter commuter = metroQueue.dequeue();
+                        commuter.setMetroWaitTime(currentTime);
+                        reachedDestination.add(commuter);
                     }
                     metroInterval += 300.0;
                     metroPassCount = 0;
                 } else {
                     for (int i = 0; i < 2400; i++) {
-                        Job job = trainStationQueue.dequeue();
-                        job.setMetroWaitTime(currentTime);
-                        reachedDestination.add(job);
+                        Commuter commuter = trainStationQueue.dequeue();
+                        commuter.setMetroWaitTime(currentTime);
+                        reachedDestination.add(commuter);
                     }
                     trainStationInterval += 300.0;
                     trainPassCount -= 2400;
@@ -110,8 +110,8 @@ public class Simulation {
             }
 
             double nextEventTime = Math.min(busStopInterval, Math.min(trainStationInterval, metroInterval));
-            if (startTimesTracker < jobStartTimes.size()) {
-                nextStart = jobStartTimes.get(startTimesTracker);
+            if (startTimesTracker < commuteStartTimes.size()) {
+                nextStart = commuteStartTimes.get(startTimesTracker);
                 nextEventTime = Math.min(nextEventTime, nextStart);
             }
             currentTime = nextEventTime;

@@ -6,7 +6,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
         Simulation simulation = new Simulation();
-        List<Job> listedTravelTimes = new ArrayList<>();
+        List<Commuter> listedTravelTimes = new ArrayList<>();
 
         //3 hours in seconds (6 AM to 9 AM)
         listedTravelTimes = simulation.run(10800.0);
@@ -14,9 +14,9 @@ public class Main {
         String file = "simData.csv";
         FileWriter writer = new FileWriter(file);
 
-        for (Job job : listedTravelTimes) {
-            System.out.println(job.TotalTravelTime());
-            writer.append(job.TotalTravelTime());
+        for (Commuter commuter : listedTravelTimes) {
+            System.out.println(commuter.TotalTravelTime());
+            writer.append(commuter.TotalTravelTime());
             writer.append("\n");
         }
 

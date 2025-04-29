@@ -16,7 +16,7 @@ public class ArrivalProcess {
     private RandomDistribution trainRideDistribution = new NormalDistribution(900.0,180.0); //15 min, 3 min
     private RandomDistribution metroRideDistribution = new NormalDistribution(600.0, 180.0); //10 min, 3 min
 
-    //Job start times
+    //Commuter start times
     public ArrayList<Double> generateStartTimes() {
         int numOfWorkers = 30000; //30,000 workers (estimated)
         for (int i = 0; i < numOfWorkers; i++) {
