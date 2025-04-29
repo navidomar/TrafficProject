@@ -14,6 +14,7 @@ public class ArrivalProcess {
     private RandomDistribution ebikeRideDistribution = new NormalDistribution(600.0, 180.0); // 10 min, 3 min
     private RandomDistribution busRideDistribution = new NormalDistribution(720.0, 300.0); //12 min, 5 min
     private RandomDistribution trainRideDistribution = new NormalDistribution(900.0,180.0); //15 min, 3 min
+    private RandomDistribution metroRideDistribution = new NormalDistribution(600.0, 180.0); //10 min, 3 min
 
     //Job start times
     public ArrayList<Double> generateStartTimes() {
@@ -39,6 +40,10 @@ public class ArrivalProcess {
     public double generateTrainRideTime() {
         return trainRideDistribution.run();
     }
+    public double generateMetroRideTime() {
+        return metroRideDistribution.run();
+    }
+
 
 }
 

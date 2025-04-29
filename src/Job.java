@@ -3,15 +3,20 @@ public class Job {
     private double eBikeRideTime;  //E-bike travel time to bus stop
     private double busRideTime;   //Bus ride time to train station
     private double trainRideTime; //Train ride time to D.C.
+    private double metroRideTime;
 
     private double busStopWaitTime = 0.0;
     private double trainStationWaitTime = 0.0;
+    private double metroWaitTime = 0.0;
 
-    public Job(double arrivalTime, double eBikeRideTime, double busRideTime, double trainRideTime) {
-        this.startTime = startTime;
+    private double metroArrivalTime;
+
+    public Job(double arrivalTime, double eBikeRideTime, double busRideTime, double trainRideTime, double metroRideTime) {
+        this.startTime = arrivalTime;
         this.eBikeRideTime = eBikeRideTime;
         this.busRideTime = busRideTime;
         this.trainRideTime = trainRideTime;
+        this.metroRideTime = metroRideTime;
     }
 
     public void setBusStopWaitTime(double currentSimTime) {
@@ -22,8 +27,18 @@ public class Job {
         trainStationWaitTime = currentSimTime - (busStopWaitTime + startTime);
     }
 
+    public void setMetroArrivalTime(double time) {
+        this.metroArrivalTime = time;
+    }
+
+    public void setMetroWaitTime(double currentSimTime) {
+        metroWaitTime = currentSimTime - metroArrivalTime;
+    }
+
     public String TotalTravelTime() {
-        return eBikeRideTime + ", " + busRideTime + ", " + trainRideTime + ", " + busStopWaitTime + ", " + trainStationWaitTime + ", " + (eBikeRideTime + busRideTime + trainRideTime + busStopWaitTime + trainStationWaitTime);
+        double total = eBikeRideTime + busRideTime + trainRideTime + metroRideTime + busStopWaitTime + trainStationWaitTime + metroWaitTime;
+        return eBikeRideTime + " | " + busRideTime + " | " + trainRideTime + " | " + metroRideTime + " | "
+                + busStopWaitTime + " | " + trainStationWaitTime + " | " + metroWaitTime + " | " + total + " | ";
     }
 
 }
