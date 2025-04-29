@@ -20,7 +20,7 @@ public class Simulation {
 
     public List<Job> run(double sim_time) {
         double busStopInterval = 300.0/46.0;  //36 buses per stop, Average of 5 minutes across 46 stops
-        double trainStationInterval = 2700.0/7.0; //4 trains per station, average of <1 hour across 7 stations
+        double trainStationInterval = 2700.0/7.0; //4 trains per station, average of 45 minutes across 7 stations
         int busPassCount = 0;  //20 max
         int trainPassCount = 0; //1300 max
         int metroPassCount = 0; //Max to be determined

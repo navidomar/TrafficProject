@@ -27,7 +27,7 @@ public class Job {
     }
 
     public String TotalTravelTime() {
-        return eBikeRideTime + ", " + busRideTime + ", " + trainRideTime + ", " + busStopWaitTime + ", " + trainStationWaitTime + ", " + (eBikeRideTime + busRideTime + trainRideTime + busStopWaitTime + trainStationWaitTime);
+        return eBikeRideTime + ", " + busRideTime + ", " + trainRideTime + ", " + (busStopWaitTime*46.0) + ", " + trainStationWaitTime + ", " + (eBikeRideTime + busRideTime + trainRideTime + (busStopWaitTime) + (trainStationWaitTime));
     }
 
 }
